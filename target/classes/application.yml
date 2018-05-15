@@ -1,0 +1,11 @@
+server:
+  name: administrator
+quartz:
+  jobStore:
+    dbName: admin
+db:
+  password: 1234
+spring:
+  data:
+    mongodb:
+      uri: administrator:1234@34.225.145.243:27017/?authSource=admin
