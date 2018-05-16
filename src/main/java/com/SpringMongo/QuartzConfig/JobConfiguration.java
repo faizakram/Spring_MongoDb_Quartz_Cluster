@@ -35,27 +35,39 @@ public class JobConfiguration {
 	@PostConstruct
 	private void initialize() throws Exception {
 		newCronExpression = propertyReader.getProperty(SchedulerConstants.JOB_EXPRESSION);
-		schedulerFactoryBean.getScheduler().addJob(leadNotificationJobDetail(), true, true);
+		schedulerFactoryBean.getScheduler().addJob(simpleJobDetail(), true, true);
 
 		if (!schedulerFactoryBean.getScheduler()
 				.checkExists(new TriggerKey(SchedulerConstants.SIMPLE_POLLING_TRIGGER_KEY,
 						SchedulerConstants.SIMPLE_POLLING_GROUP))) {
-			schedulerFactoryBean.getScheduler().scheduleJob(leadNotificationJobDetail(), leadNotificationJobTrigger());
+			schedulerFactoryBean.getScheduler().scheduleJob(simpleJobDetail(), simpleJobTrigger());
 		}
 	}
 	
-	private static JobDetail leadNotificationJobDetail() {
-		JobDetailImpl simpleJobs = new JobDetailImpl();
-		simpleJobs.setKey(new JobKey(SchedulerConstants.SIMPLE_POLLING_JOB_KEY,
+	private static JobDetail simpleJobDetail() {
+		JobDetailImpl leadNotificationJobDetail = new JobDetailImpl();
+
+		leadNotificationJobDetail.setKey(new JobKey(SchedulerConstants.SIMPLE_POLLING_JOB_KEY,
 				SchedulerConstants.SIMPLE_POLLING_GROUP));
-		simpleJobs.setJobClass(SimpleScheduler.class);
-		simpleJobs.setDurability(true);
-		return simpleJobs;
+		leadNotificationJobDetail.setJobClass(SimpleScheduler.class);
+		leadNotificationJobDetail.setDurability(true);
+
+		return leadNotificationJobDetail;
 	}
-	private static Trigger leadNotificationJobTrigger() {
+	
+	/*	private static Trigger leadNotificationJobTrigger() {
+		return newTrigger().forJob(leadNotificationJobDetail())
+				.withIdentity(SchedulerConstants.SIMPLE_POLLING_TRIGGER_KEY,
+						SchedulerConstants.SIMPLE_POLLING_GROUP)
+				.withPriority(50).withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(1))
+				.startAt(Date.from(LocalDateTime.now().plusSeconds(3).atZone(ZoneId.systemDefault()).toInstant()))
+				.build();
+	}*/
+	
+	private static Trigger simpleJobTrigger() {
 		CronScheduleBuilder builder = CronScheduleBuilder.cronSchedule(newCronExpression);
 		CronTrigger crontrigger = TriggerBuilder.newTrigger()
-				.withIdentity(SchedulerConstants.SIMPLE_POLLING_JOB_KEY,
+				.withIdentity(SchedulerConstants.SIMPLE_POLLING_TRIGGER_KEY,
 						SchedulerConstants.SIMPLE_POLLING_GROUP)
 				.withSchedule(builder.withMisfireHandlingInstructionFireAndProceed()).build();
 		return crontrigger;
