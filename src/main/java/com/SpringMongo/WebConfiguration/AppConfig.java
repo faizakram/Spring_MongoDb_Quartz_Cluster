@@ -10,10 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.SpringMongo.CommonConstant.CommonConstants;
 import com.SpringMongo.PropertyReader.PropertyReader;
 
-import ch.rasc.sse.eventbus.config.EnableSseEventBus;
-
 @EnableScheduling
-@EnableSseEventBus
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.SpringMongo")
