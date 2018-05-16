@@ -1,6 +1,5 @@
 package com.SpringMongo.Controller;
 
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,7 @@ public class AppController {
 	
 
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.GET)
-	public String newUser(ModelMap model) {
+	public String newUser() {
 		return "registration";
 	}
 

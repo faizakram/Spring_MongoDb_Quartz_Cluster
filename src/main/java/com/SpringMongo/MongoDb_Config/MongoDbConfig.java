@@ -32,12 +32,19 @@ public class MongoDbConfig {
 		seeds.add(new ServerAddress(propertyReader.getProperty(CommonConstants.MONGODB_HOST),
 				Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_PORT))));
 		MongoClientOptions.Builder mongoOperations = MongoClientOptions.builder();
+		// while Using SSL
+		// MongoClientOptions.Builder mongoOperations = MongoClientOptions.builder().
+		// socketFactory(SSLSocketFactory.getDefault());
 		mongoOperations.connectionsPerHost(
 				Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_CONNECTION_PER_HOST)));
-		mongoOperations.threadsAllowedToBlockForConnectionMultiplier(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_THREAD_ALLOW)));
-		mongoOperations.connectTimeout(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_CONNECTION_TIMEOUT)));
-		mongoOperations.socketTimeout(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_SOCKET_TIMEOUT)));
-		mongoOperations.maxWaitTime(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_MAX_WAIT_TIME)));
+		mongoOperations.threadsAllowedToBlockForConnectionMultiplier(
+				Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_THREAD_ALLOW)));
+		mongoOperations.connectTimeout(
+				Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_CONNECTION_TIMEOUT)));
+		mongoOperations
+				.socketTimeout(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_SOCKET_TIMEOUT)));
+		mongoOperations
+				.maxWaitTime(Integer.parseInt(propertyReader.getProperty(CommonConstants.MONGODB_MAX_WAIT_TIME)));
 		MongoClientOptions options = mongoOperations.build();
 		return new MongoClient(seeds, mongocre, options);
 	}

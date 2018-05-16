@@ -34,34 +34,29 @@ public class JobConfiguration {
 
 	@PostConstruct
 	private void initialize() throws Exception {
-		newCronExpression = propertyReader.getProperty(CommonConstants.JOB_EXPRESSION);
+		newCronExpression = propertyReader.getProperty(SchedulerConstants.JOB_EXPRESSION);
 		schedulerFactoryBean.getScheduler().addJob(leadNotificationJobDetail(), true, true);
 
 		if (!schedulerFactoryBean.getScheduler()
-				.checkExists(new TriggerKey(SchedulerConstants.LEAD_NOTIFICATION_POLLING_TRIGGER_KEY,
-						SchedulerConstants.LEAD_NOTIFICATION_POLLING_GROUP))) {
+				.checkExists(new TriggerKey(SchedulerConstants.SIMPLE_POLLING_TRIGGER_KEY,
+						SchedulerConstants.SIMPLE_POLLING_GROUP))) {
 			schedulerFactoryBean.getScheduler().scheduleJob(leadNotificationJobDetail(), leadNotificationJobTrigger());
 		}
 	}
 	
 	private static JobDetail leadNotificationJobDetail() {
-		JobDetailImpl leadNotificationJobDetail = new JobDetailImpl();
-
-		leadNotificationJobDetail.setKey(new JobKey(SchedulerConstants.LEAD_NOTIFICATION_POLLING_JOB_KEY,
-				SchedulerConstants.LEAD_NOTIFICATION_POLLING_GROUP));
-		leadNotificationJobDetail.setJobClass(LeadNotificationScheduler.class);
-		leadNotificationJobDetail.setDurability(true);
-
-		return leadNotificationJobDetail;
+		JobDetailImpl simpleJobs = new JobDetailImpl();
+		simpleJobs.setKey(new JobKey(SchedulerConstants.SIMPLE_POLLING_JOB_KEY,
+				SchedulerConstants.SIMPLE_POLLING_GROUP));
+		simpleJobs.setJobClass(SimpleScheduler.class);
+		simpleJobs.setDurability(true);
+		return simpleJobs;
 	}
-
-
-
 	private static Trigger leadNotificationJobTrigger() {
 		CronScheduleBuilder builder = CronScheduleBuilder.cronSchedule(newCronExpression);
 		CronTrigger crontrigger = TriggerBuilder.newTrigger()
-				.withIdentity(SchedulerConstants.SCHEDULED_EXAM_POLLING_TRIGGER_KEY,
-						SchedulerConstants.SCHEDULED_EXAM_POLLING_GROUP)
+				.withIdentity(SchedulerConstants.SIMPLE_POLLING_JOB_KEY,
+						SchedulerConstants.SIMPLE_POLLING_GROUP)
 				.withSchedule(builder.withMisfireHandlingInstructionFireAndProceed()).build();
 		return crontrigger;
 	}

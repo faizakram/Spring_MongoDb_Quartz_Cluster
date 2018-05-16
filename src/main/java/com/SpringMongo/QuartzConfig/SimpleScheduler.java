@@ -10,13 +10,11 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution()
-public class LeadNotificationScheduler extends QuartzJobBean {
+public class SimpleScheduler extends QuartzJobBean {
 
 	@Override
 	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
-		System.out.println("*****LEAD NOTIFICATION SCHEDULER ON CLUSTERED ENV*****");
-
-		
+		System.out.println("*****SIMPLE JOBS SCHEDULER ON CLUSTERED ENV*****");
 	}
 
 }

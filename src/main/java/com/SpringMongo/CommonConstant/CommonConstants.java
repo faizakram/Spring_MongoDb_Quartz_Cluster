@@ -14,7 +14,6 @@ public class CommonConstants {
 	public static final String MONGODB_CONNECTION_TIMEOUT = "mongo.connect-timeout";
 	public static final String MONGODB_SOCKET_TIMEOUT = "mongo.socket-timeout";
 	public static final String MONGODB_MAX_WAIT_TIME = "mongo.max-wait-time";
-	public static final String JOB_EXPRESSION = "quartz.time.expression";
 	public static final String MONGODB_URI = "mongo.mongoAddress";
 	
 
