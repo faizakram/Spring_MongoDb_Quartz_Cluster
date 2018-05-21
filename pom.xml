@@ -14,8 +14,8 @@
 	<!-- You have to use it -->
 	<repositories>
 		<repository>
-			<id>quartz-mongodb</id>
-			<url>http://clojars.org/repo/</url>
+			<id>michaelklishin</id>
+			<url>https://dl.bintray.com/michaelklishin/maven/</url>
 		</repository>
 	</repositories>
 
@@ -26,7 +26,7 @@
 		<aspectj.version>1.8.9</aspectj.version>
 		<spring.mongodb.version>1.10.8.RELEASE</spring.mongodb.version>
 		<quartz.scheduler.version>2.2.1</quartz.scheduler.version>
-		<quartz.com.novemberain.version>2.0.0-rc2</quartz.com.novemberain.version>
+		<quartz.com.novemberain.version>2.0.0</quartz.com.novemberain.version>
 		<mongo.java.driver.version>3.6.3</mongo.java.driver.version>
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
 		<javax.servlet.jsp-api.version>2.3.1</javax.servlet.jsp-api.version>
